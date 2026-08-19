@@ -1,0 +1,58 @@
+export const LANGUAGE_MAP = {
+  js: 'javascript',
+  jsx: 'javascript',
+  mjs: 'javascript',
+  cjs: 'javascript',
+  ts: 'typescript',
+  tsx: 'typescript',
+  py: 'python',
+  java: 'java',
+  c: 'c',
+  h: 'c',
+  cpp: 'cpp',
+  hpp: 'cpp',
+  cc: 'cpp',
+  cxx: 'cpp',
+  html: 'html',
+  htm: 'html',
+  css: 'css',
+  scss: 'scss',
+  sass: 'scss',
+  json: 'json',
+  md: 'markdown',
+  markdown: 'markdown',
+  sql: 'sql',
+  sh: 'shell',
+  bash: 'shell',
+  xml: 'xml',
+  svg: 'xml',
+  yaml: 'yaml',
+  yml: 'yaml',
+};
+
+export function getLanguageForFile(fileName = '') {
+  const ext = fileName.split('.').pop().toLowerCase();
+  return LANGUAGE_MAP[ext] || 'plaintext';
+}
+
+export const MONACO_DEFAULT_OPTIONS = {
+  theme: 'vs-dark',
+  fontSize: 14,
+  fontFamily: '"Fira Code", "JetBrains Mono", Consolas, monospace',
+  fontLigatures: true,
+  tabSize: 2,
+  minimap: { enabled: true, side: 'right' },
+  scrollBeyondLastLine: false,
+  automaticLayout: true,
+  cursorBlinking: 'smooth',
+  cursorSmoothCaretAnimation: 'on',
+  smoothScrolling: true,
+  lineNumbers: 'on',
+  roundedSelection: false,
+  renderWhitespace: 'selection',
+  bracketPairColorization: { enabled: true },
+  guides: { bracketPairs: true, indentation: true },
+  wordWrap: 'on',
+  renderLineHighlight: 'all',
+  overviewRulerBorder: false,
+};

@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-dark-900 text-dark-100;
+  }
+}
+
+/* Custom DevSync Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #111620;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2b3240;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #484f58;
+}
+
+/* Monaco Remote Cursor & Selection Overlays */
+.remote-cursor {
+  position: absolute;
+  width: 2px !important;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.remote-cursor-badge {
+  position: absolute;
+  top: -18px;
+  left: -2px;
+  font-size: 10px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: white;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 1001;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.remote-selection {
+  position: absolute;
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+/* Pulse animation */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+  }
+}
+
+.glow-active {
+  animation: pulseGlow 2.5s infinite;
+}
