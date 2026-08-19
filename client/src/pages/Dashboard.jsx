@@ -19,6 +19,7 @@ import {
   X,
   UserPlus,
   ArrowRight,
+  TrendingUp,
 } from 'lucide-react';
 
 export default function Dashboard() {
@@ -96,26 +97,30 @@ export default function Dashboard() {
   }, [projects, filterTab, searchQuery, user]);
 
   return (
-    <div className="min-h-screen bg-dark-900 text-dark-100 flex flex-col select-none">
+    <div className="min-h-screen bg-dark-950 text-dark-200 flex flex-col select-none relative overflow-hidden">
+      {/* Ambient background glows */}
+      <div className="ambient-glow bg-brand-600/10 top-0 right-10" />
+      <div className="ambient-glow bg-accent-purple/10 bottom-10 left-10" />
+
       <Navbar onOpenCreateProject={() => setShowCreateModal(true)} />
 
-      <div className="flex-1 flex">
+      <div className="flex-1 flex relative z-10">
         <Sidebar onOpenCreateProject={() => setShowCreateModal(true)} />
 
         {/* Main Content Area */}
         <main className="flex-1 p-6 lg:p-8 space-y-6 overflow-y-auto max-w-7xl mx-auto w-full">
           {/* Pending Invitations Banner */}
           {invitations.length > 0 && (
-            <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-950/40 via-dark-800 to-dark-850 border border-emerald-500/40 shadow-lg flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-950/30 via-dark-850 to-dark-900 border border-emerald-500/40 shadow-glass-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div className="flex items-center space-x-3">
-                <div className="p-2 rounded-xl bg-emerald-500/20 text-emerald-400">
+                <div className="p-2.5 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-400">
                   <UserPlus className="w-5 h-5" />
                 </div>
                 <div>
                   <h4 className="text-xs font-bold text-white">
                     You have {invitations.length} pending project {invitations.length === 1 ? 'invitation' : 'invitations'}!
                   </h4>
-                  <p className="text-[11px] text-dark-300">
+                  <p className="text-[11px] text-dark-400">
                     Collaborators have invited you to join their engineering workspaces.
                   </p>
                 </div>
@@ -123,7 +128,7 @@ export default function Dashboard() {
 
               <Link
                 to="/notifications"
-                className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-md transition-all flex items-center space-x-1.5 self-start sm:self-auto"
+                className="btn-primary py-2 px-4 bg-emerald-600 hover:bg-emerald-500 flex items-center space-x-1.5 self-start sm:self-auto text-xs"
               >
                 <span>Review & Accept</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -138,13 +143,13 @@ export default function Dashboard() {
                 Welcome back, {user?.name || 'Engineer'}
               </h1>
               <p className="text-xs text-dark-400">
-                Here is the latest status across your real-time engineering workspaces.
+                Here is the real-time activity and status across your engineering workspaces.
               </p>
             </div>
 
             <button
               onClick={() => setShowCreateModal(true)}
-              className="flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-500 hover:to-brand-600 text-white text-xs font-bold shadow-lg shadow-brand-500/20 active:scale-95 transition-all self-start sm:self-auto"
+              className="btn-primary flex items-center space-x-2 self-start sm:self-auto"
             >
               <Plus className="w-4 h-4" />
               <span>Create New Project</span>
@@ -156,26 +161,26 @@ export default function Dashboard() {
             <StatCard
               title="Total Projects"
               value={stats.totalProjects}
-              icon={<Folder className="w-5 h-5 text-brand-400" />}
+              icon={<Folder className="w-4 h-4 text-brand-400" />}
               badge="Workspaces"
             />
             <StatCard
               title="Owned Projects"
               value={stats.ownedProjects}
-              icon={<Layers className="w-5 h-5 text-emerald-400" />}
+              icon={<Layers className="w-4 h-4 text-emerald-400" />}
               badge="Owner"
             />
             <StatCard
               title="Shared With Me"
               value={stats.sharedProjects}
-              icon={<Users className="w-5 h-5 text-purple-400" />}
+              icon={<Users className="w-4 h-4 text-purple-400" />}
               badge="Collaborator"
             />
             <StatCard
               title="Active Collaborations"
               value={stats.activeCollaborations}
-              icon={<Radio className="w-5 h-5 text-amber-400" />}
-              badge="Team"
+              icon={<Radio className="w-4 h-4 text-amber-400" />}
+              badge="Live Mesh"
             />
           </div>
 
@@ -183,33 +188,33 @@ export default function Dashboard() {
           <div className="space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               {/* Filter Tabs */}
-              <div className="flex items-center space-x-1 bg-dark-850 p-1 rounded-xl border border-dark-700/80 self-start">
+              <div className="flex items-center space-x-1 bg-dark-900 p-1 rounded-xl border border-white/[0.06] self-start">
                 <button
                   onClick={() => setFilterTab('all')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                     filterTab === 'all'
-                      ? 'bg-brand-600 text-white shadow-sm'
-                      : 'text-dark-400 hover:text-dark-200'
+                      ? 'bg-dark-800 text-white border border-white/[0.08] shadow-sm'
+                      : 'text-dark-400 hover:text-white'
                   }`}
                 >
                   All Projects ({projects.length})
                 </button>
                 <button
                   onClick={() => setFilterTab('owned')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                     filterTab === 'owned'
-                      ? 'bg-brand-600 text-white shadow-sm'
-                      : 'text-dark-400 hover:text-dark-200'
+                      ? 'bg-dark-800 text-white border border-white/[0.08] shadow-sm'
+                      : 'text-dark-400 hover:text-white'
                   }`}
                 >
                   My Projects ({stats.ownedProjects})
                 </button>
                 <button
                   onClick={() => setFilterTab('shared')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                     filterTab === 'shared'
-                      ? 'bg-brand-600 text-white shadow-sm'
-                      : 'text-dark-400 hover:text-dark-200'
+                      ? 'bg-dark-800 text-white border border-white/[0.08] shadow-sm'
+                      : 'text-dark-400 hover:text-white'
                   }`}
                 >
                   Shared ({stats.sharedProjects})
@@ -218,18 +223,18 @@ export default function Dashboard() {
 
               {/* Search Bar */}
               <div className="relative w-full sm:w-72">
-                <Search className="w-4 h-4 text-dark-400 absolute left-3 top-2.5" />
+                <Search className="w-4 h-4 text-dark-500 absolute left-3 top-2.5" />
                 <input
                   type="text"
                   placeholder="Search projects by name, template..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-dark-850 border border-dark-700/80 focus:border-brand-500 rounded-xl pl-9 pr-8 py-2 text-xs text-white outline-none placeholder:text-dark-500"
+                  className="w-full bg-dark-900 border border-white/[0.08] focus:border-brand-500 rounded-xl pl-9 pr-8 py-2 text-xs text-white outline-none placeholder:text-dark-500 transition-colors"
                 />
                 {searchQuery && (
                   <button
                     onClick={() => setSearchQuery('')}
-                    className="absolute right-2.5 top-2.5 text-dark-400 hover:text-white"
+                    className="absolute right-2.5 top-2.5 text-dark-500 hover:text-white"
                   >
                     <X className="w-3.5 h-3.5" />
                   </button>
@@ -243,7 +248,7 @@ export default function Dashboard() {
                 {[1, 2, 3].map((i) => (
                   <div
                     key={i}
-                    className="h-44 rounded-2xl bg-dark-850 border border-dark-700 animate-pulse"
+                    className="h-44 rounded-2xl bg-dark-900 border border-white/[0.06] animate-pulse"
                   />
                 ))}
               </div>
@@ -258,9 +263,9 @@ export default function Dashboard() {
                 ))}
               </div>
             ) : (
-              <div className="py-16 text-center rounded-2xl bg-dark-850/50 border border-dashed border-dark-700 space-y-3">
-                <FolderPlus className="w-10 h-10 text-dark-500 mx-auto" />
-                <h3 className="text-sm font-semibold text-dark-200">No projects found</h3>
+              <div className="py-16 text-center rounded-2xl glass-panel space-y-3">
+                <FolderPlus className="w-9 h-9 text-dark-500 mx-auto" />
+                <h3 className="text-sm font-bold text-white">No projects found</h3>
                 <p className="text-xs text-dark-400 max-w-sm mx-auto">
                   {searchQuery
                     ? `No projects matched "${searchQuery}". Try a different name or clear the search.`
@@ -269,14 +274,14 @@ export default function Dashboard() {
                 {searchQuery ? (
                   <button
                     onClick={() => setSearchQuery('')}
-                    className="px-4 py-2 rounded-xl bg-dark-750 hover:bg-dark-700 text-white text-xs font-semibold border border-dark-650 transition-all"
+                    className="btn-secondary text-xs"
                   >
                     Clear Search
                   </button>
                 ) : (
                   <button
                     onClick={() => setShowCreateModal(true)}
-                    className="px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-500 text-white text-xs font-semibold shadow-md transition-all"
+                    className="btn-primary text-xs"
                   >
                     Create Project
                   </button>
@@ -307,14 +312,14 @@ export default function Dashboard() {
 
 function StatCard({ title, value, icon, badge }) {
   return (
-    <div className="p-4 rounded-2xl bg-dark-850 border border-dark-700/80 space-y-2">
+    <div className="glass-panel p-4 rounded-2xl space-y-2">
       <div className="flex items-center justify-between">
         <span className="text-[11px] font-semibold text-dark-400">{title}</span>
-        <div className="p-1.5 rounded-lg bg-dark-800 border border-dark-700">{icon}</div>
+        <div className="p-1.5 rounded-lg bg-dark-800 border border-white/[0.06]">{icon}</div>
       </div>
       <div className="flex items-baseline space-x-2">
         <span className="text-2xl font-extrabold text-white font-mono">{value}</span>
-        <span className="text-[10px] text-dark-500">{badge}</span>
+        <span className="text-[10px] text-dark-500 font-semibold uppercase">{badge}</span>
       </div>
     </div>
   );
