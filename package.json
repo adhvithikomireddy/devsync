@@ -7,7 +7,7 @@
     "dev": "concurrently \"npm --prefix server start\" \"npm --prefix client run dev\"",
     "server": "npm --prefix server start",
     "client": "npm --prefix client run dev",
-    "install:all": "npm install && npm --prefix server install && npm --prefix client install",
+    "install:all": "npm install && npm --prefix server install && npm --prefix client install --include=dev",
     "build": "npm --prefix client run build"
   },
   "devDependencies": {
